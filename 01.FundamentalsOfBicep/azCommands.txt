@@ -1,0 +1,22 @@
+az login
+
+az account set --subscription "Concierge Subscription"
+
+az account list --refresh --query "[?contains(name, 'Concierge Subscription')].id" --output table
+
+az account set --subscription {your subscription ID}
+
+az configure --defaults group="your resource group name"
+
+
+
+az deployment group list --output table
+
+
+az deployment group create \
+  --template-file main.bicep \
+  --parameters environmentType=nonprod
+
+
+az deployment group create --template-file main.bicep --parameters environmentType=nonprod
+
