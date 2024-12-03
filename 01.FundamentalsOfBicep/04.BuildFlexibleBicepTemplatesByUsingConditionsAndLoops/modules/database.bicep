@@ -1,5 +1,5 @@
 @description('The Azure region into which the resources should be deployed.')
-param location string = resourceGroup().location
+param location string //= resourceGroup().location
 
 @secure()
 @description('The administrator login username for the SQL server.')
