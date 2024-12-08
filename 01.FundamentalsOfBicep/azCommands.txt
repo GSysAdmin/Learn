@@ -19,26 +19,19 @@ az deployment group create \
 az deployment group create --template-file main.bicep --parameters environmentType=nonprod
 
 az deployment group create \
-    --resource-group learn-d749ec51-36f6-4b84-8cb0-a43b702f3282 \
+    --resource-group mslearn \
     --template-file main.bicep \
-    --parameters sqlServerAdministratorLogin=sqladmin sqlServerAdministratorLoginPassword=TopSikker007!
-
-sqlids=(
-
-)
-
-az resource delete --ids "$sqlids"
-
-resources="$(az resource list --resource-group "mslearn" | grep id | awk -F \" '{print $4}')"
-
-for id in $resources; do
-    az resource delete --resource-group "mslearn" --ids "$id" --verbose
-done
+    --parameters sqlServerAdministratorLogin= sqlServerAdministratorLoginPassword=
 
 
-for id in $sqlids; do
-    az resource delete --resource-group "mslearn" --ids "$id" --verbose
-done
+
+## Fetch the resource IDs in the resource group "mslearn"
+resources=$(az resource list --resource-group "mslearn" --query "[].id" -o tsv)
+
+## Iterate over each resource ID and delete it
+while IFS= read -r id; do
+    az resource delete --ids "$id" --verbose
+done <<< "$resources"
 
 
 sqlServerAdministratorLogin:
