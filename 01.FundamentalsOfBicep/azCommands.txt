@@ -9,9 +9,7 @@ az account set --subscription {your subscription ID}
 az configure --defaults group="your resource group name"
 
 
-
 az deployment group list --output table
-
 
 az deployment group create \
   --template-file main.bicep \
@@ -20,3 +18,24 @@ az deployment group create \
 
 az deployment group create --template-file main.bicep --parameters environmentType=nonprod
 
+az deployment group create \
+    --resource-group mslearn \
+    --template-file main.bicep \
+    --parameters sqlServerAdministratorLogin= sqlServerAdministratorLoginPassword=
+
+
+
+## Fetch the resource IDs in the resource group "mslearn"
+resources=$(az resource list --resource-group "mslearn" --query "[].id" -o tsv)
+
+## Iterate over each resource ID and delete it
+while IFS= read -r id; do
+    az resource delete --ids "$id" --verbose
+done <<< "$resources"
+
+
+sqlServerAdministratorLogin:
+sqladmin
+
+sqlServerAdministratorLoginPassword:
+TopSikker007!
