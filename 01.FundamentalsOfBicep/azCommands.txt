@@ -9,9 +9,7 @@ az account set --subscription {your subscription ID}
 az configure --defaults group="your resource group name"
 
 
-
 az deployment group list --output table
-
 
 az deployment group create \
   --template-file main.bicep \
@@ -20,3 +18,31 @@ az deployment group create \
 
 az deployment group create --template-file main.bicep --parameters environmentType=nonprod
 
+az deployment group create \
+    --resource-group learn-d749ec51-36f6-4b84-8cb0-a43b702f3282 \
+    --template-file main.bicep \
+    --parameters sqlServerAdministratorLogin=sqladmin sqlServerAdministratorLoginPassword=TopSikker007!
+
+sqlids=(
+
+)
+
+az resource delete --ids "$sqlids"
+
+resources="$(az resource list --resource-group "mslearn" | grep id | awk -F \" '{print $4}')"
+
+for id in $resources; do
+    az resource delete --resource-group "mslearn" --ids "$id" --verbose
+done
+
+
+for id in $sqlids; do
+    az resource delete --resource-group "mslearn" --ids "$id" --verbose
+done
+
+
+sqlServerAdministratorLogin:
+sqladmin
+
+sqlServerAdministratorLoginPassword:
+TopSikker007!
