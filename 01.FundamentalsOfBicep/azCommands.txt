@@ -23,6 +23,9 @@ az deployment group create \
     --template-file main.bicep \
     --parameters sqlServerAdministratorLogin= sqlServerAdministratorLoginPassword=
 
+az deployment group create \
+    --template-file main.bicep \
+    --resource-group learn-eb564845-5feb-4878-84d4-deb06bfbd194
 
 
 ## Fetch the resource IDs in the resource group "mslearn"
@@ -39,3 +42,5 @@ sqladmin
 
 sqlServerAdministratorLoginPassword:
 TopSikker007!
+
+
