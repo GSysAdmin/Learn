@@ -19,6 +19,9 @@ var toyManualsStorageAccountName = 'toyweb${resourceNameSuffix}'
 // Define the SKUs for each component based on the environment type.
 var environmentConfigurationMap = {
   nonprod: {
+    appServiceApp: {
+      alwaysOn: false
+    }
     appServicePlan: {
       sku: {
         name: 'F1'
@@ -32,6 +35,9 @@ var environmentConfigurationMap = {
     }
   }
   prod: {
+    appServiceApp: {
+      alwaysOn: true
+    }
     appServicePlan: {
       sku: {
         name: 'S1'
@@ -61,7 +67,7 @@ resource appServiceApp 'Microsoft.Web/sites@2023-12-01' = {
     serverFarmId: appServicePlan.id
     httpsOnly: true
     siteConfig: {
-      alwaysOn: true
+      alwaysOn: environmentConfigurationMap[environmentType].appServiceApp.alwaysOn
       appSettings: [
         {
           name: 'ToyManualsStorageAccountConnectionString'
