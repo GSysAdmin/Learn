@@ -1,6 +1,12 @@
 name: deploy-toy-website
+concurrency: toy-company
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '05.DeployAzureresourcesbyusingBicepandGitHubActions/**'
 
 permissions:
   id-token: write
