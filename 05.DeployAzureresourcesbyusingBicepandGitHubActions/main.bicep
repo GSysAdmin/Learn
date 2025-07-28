@@ -61,6 +61,7 @@ resource appServiceApp 'Microsoft.Web/sites@2023-12-01' = {
     serverFarmId: appServicePlan.id
     httpsOnly: true
     siteConfig: {
+      alwaysOn: true
       appSettings: [
         {
           name: 'ToyManualsStorageAccountConnectionString'
